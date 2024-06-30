@@ -34,6 +34,10 @@ public class ClienteServiceImpl implements ClienteService {
     public Mono<Cliente> actualizarCliente(Cliente cliente) {
         return findByDni(cliente.getDni())
                 .flatMap(e -> {
+                    e.setDni(cliente.getDni());
+                    e.setNombre(cliente.getNombre());
+                    e.setApellido(cliente.getApellido());
+                    e.setTelefono(cliente.getTelefono());
                     return clienteDao.save(e);
                 });
     }
