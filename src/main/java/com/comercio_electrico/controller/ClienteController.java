@@ -27,4 +27,9 @@ public class ClienteController {
         cliente.setNuevo(true);
         return new ResponseEntity<>(clienteService.registrarCliente(cliente), HttpStatus.OK);
     }
+
+    @PutMapping(path = "/actualizar")
+    public ResponseEntity<Mono<Cliente>> actualizar(@RequestBody Cliente cliente){
+        return new ResponseEntity<>(clienteService.actualizarCliente(cliente), HttpStatus.OK);
+    }
 }

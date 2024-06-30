@@ -8,6 +8,8 @@ public interface ClienteService {
 
     Mono<Cliente> registrarCliente(Cliente cliente);
 
+    Mono<Cliente> actualizarCliente(Cliente cliente);
+
     Mono<Cliente> findByDni(String dni);
 
     Flux<Cliente> findAll();

@@ -9,7 +9,6 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Service
 public class ClienteServiceImpl implements ClienteService {
@@ -27,6 +26,14 @@ public class ClienteServiceImpl implements ClienteService {
                 .switchIfEmpty(Mono.just(cliente)).flatMap(e -> {
                     //e.setNuevo(true);
                     e.setFchRegistro(LocalDate.now());
+                    return clienteDao.save(e);
+                });
+    }
+
+    @Override
+    public Mono<Cliente> actualizarCliente(Cliente cliente) {
+        return findByDni(cliente.getDni())
+                .flatMap(e -> {
                     return clienteDao.save(e);
                 });
     }
