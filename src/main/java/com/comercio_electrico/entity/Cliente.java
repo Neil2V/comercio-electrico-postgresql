@@ -41,7 +41,6 @@ public class Cliente implements Persistable<Integer> {
     private String dni;
 
     @Transient
-    @JsonIgnore
     private boolean nuevo;
 
     @Override

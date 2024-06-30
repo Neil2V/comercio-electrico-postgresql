@@ -20,13 +20,16 @@ public class ClienteServiceImpl implements ClienteService {
     @Override
     public Mono<Cliente> registrarCliente(Cliente cliente) {
         return findByDni(cliente.getDni())
-                .switchIfEmpty(Mono.just(cliente))
                 .flatMap(e -> {
+                    e.setNuevo(false);
+                    return Mono.just(e);
+                })
+                .switchIfEmpty(Mono.just(cliente)).flatMap(e -> {
+                    //e.setNuevo(true);
                     e.setFchRegistro(LocalDate.now());
                     return clienteDao.save(e);
                 });
     }
-
 
     @Override
     public Mono<Cliente> findByDni(String dni) {
