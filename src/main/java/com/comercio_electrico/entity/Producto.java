@@ -21,22 +21,14 @@ public class Producto implements Persistable<Integer> {
     @Id
     @Column(value = "idProducto")
     private Integer idProducto;
-
     private String nombre;
-
     private BigDecimal precio;
-
     private String descripcion;
-
     private String categoria;
-    private Integer cantidad;
     private Integer stock;
-
-    private String imagen;
-
+    private String codigo;
 
     @Transient
-    @JsonIgnore
     private boolean nuevo;
 
     @Override
