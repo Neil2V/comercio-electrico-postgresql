@@ -6,7 +6,7 @@ import reactor.core.publisher.Mono;
 
 public interface ClienteService {
 
-    Mono<Void> registrarCliente(Cliente cliente);
+    Mono<Cliente> registrarCliente(Cliente cliente);
 
     Mono<Cliente> findByDni(String dni);
 

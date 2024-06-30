@@ -22,8 +22,8 @@ public class ClienteController {
         return new ResponseEntity<>(clienteService.findAll(), HttpStatus.OK);
     }
 
-    @PostMapping(path = "/registro")
-    public ResponseEntity<Mono<Void>> registro(@RequestBody Cliente cliente){
+    @PostMapping(path = "/registrar")
+    public ResponseEntity<Mono<Cliente>> registro(@RequestBody Cliente cliente){
         cliente.setNuevo(true);
         return new ResponseEntity<>(clienteService.registrarCliente(cliente), HttpStatus.OK);
     }
