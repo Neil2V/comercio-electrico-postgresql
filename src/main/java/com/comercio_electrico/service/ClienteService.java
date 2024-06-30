@@ -13,4 +13,6 @@ public interface ClienteService {
     Mono<Cliente> findByDni(String dni);
 
     Flux<Cliente> findAll();
+
+    Mono<Cliente> eliminarCliente(Integer idCliente);
 }

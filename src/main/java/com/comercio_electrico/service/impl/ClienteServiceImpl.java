@@ -47,4 +47,10 @@ public class ClienteServiceImpl implements ClienteService {
     public Flux<Cliente> findAll() {
         return clienteDao.findAll();
     }
+
+    @Override
+    public Mono<Cliente> eliminarCliente(Integer idCliente) {
+        return clienteDao.findById(idCliente)
+                .flatMap(e -> clienteDao.deleteById(idCliente).then(Mono.just(e)));
+    }
 }

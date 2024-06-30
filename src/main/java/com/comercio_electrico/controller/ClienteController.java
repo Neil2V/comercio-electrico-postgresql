@@ -2,6 +2,7 @@ package com.comercio_electrico.controller;
 
 import com.comercio_electrico.entity.Cliente;
 import com.comercio_electrico.service.ClienteService;
+import jakarta.ws.rs.Path;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,5 +32,12 @@ public class ClienteController {
     @PutMapping(path = "/actualizar")
     public ResponseEntity<Mono<Cliente>> actualizar(@RequestBody Cliente cliente){
         return new ResponseEntity<>(clienteService.actualizarCliente(cliente), HttpStatus.OK);
+    }
+
+    @DeleteMapping(path = "/delete/{idCliente}")
+    public Mono<ResponseEntity<Cliente>> eliminar(@PathVariable("idCliente") Integer idCliente){
+        return clienteService.eliminarCliente(idCliente)
+                .map(e -> new ResponseEntity<>(e, HttpStatus.OK))
+                .switchIfEmpty(Mono.just(new ResponseEntity<>(HttpStatus.NOT_FOUND)));
     }
 }
