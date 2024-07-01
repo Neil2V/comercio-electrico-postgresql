@@ -11,7 +11,6 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 
-@Transactional
 @Service
 public class ProductoServiceImpl implements ProductoService {
 

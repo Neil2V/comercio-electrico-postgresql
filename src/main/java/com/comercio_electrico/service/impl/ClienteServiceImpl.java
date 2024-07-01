@@ -12,7 +12,6 @@ import reactor.core.publisher.Mono;
 import java.time.LocalDate;
 
 @Service
-@Transactional
 public class ClienteServiceImpl implements ClienteService {
 
     @Autowired
