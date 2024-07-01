@@ -5,12 +5,14 @@ import com.comercio_electrico.entity.Cliente;
 import com.comercio_electrico.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDate;
 
 @Service
+@Transactional
 public class ClienteServiceImpl implements ClienteService {
 
     @Autowired

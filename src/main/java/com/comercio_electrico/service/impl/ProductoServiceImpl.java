@@ -6,11 +6,12 @@ import com.comercio_electrico.entity.Producto;
 import com.comercio_electrico.service.ProductoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.time.LocalDate;
 
+@Transactional
 @Service
 public class ProductoServiceImpl implements ProductoService {
 
