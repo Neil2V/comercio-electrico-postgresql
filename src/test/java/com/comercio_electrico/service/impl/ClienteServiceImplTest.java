@@ -2,7 +2,6 @@ package com.comercio_electrico.service.impl;
 
 import com.comercio_electrico.dao.ClienteDao;
 import com.comercio_electrico.entity.Cliente;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -93,7 +92,7 @@ public class ClienteServiceImplTest {
             Mono<Cliente> resultado = clienteService.findByDni(anyString());
 
             StepVerifier.create(resultado)
-                    .expectNextCount(0) // Expect no elements
+                    .expectNextCount(0)
                     .verifyComplete();
         }
 
