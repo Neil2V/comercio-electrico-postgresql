@@ -2,6 +2,7 @@ package com.comercio_electrico.service.impl;
 
 import com.comercio_electrico.dao.ClienteDao;
 import com.comercio_electrico.entity.Cliente;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -10,9 +11,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import reactor.test.StepVerifier;
 
-import java.time.LocalDate;
+import java.util.Collections;
 
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.when;
@@ -35,6 +38,7 @@ public class ClienteServiceImplTest {
         @DisplayName("test para cliente que ya esta registrado")
         @Test
         public void registrarClienteCaso2() {
+
             Cliente cliente = Cliente.builder()
                     .idCliente(1)
                     .nombre("Neil")
@@ -44,7 +48,7 @@ public class ClienteServiceImplTest {
                     .nuevo(false)
                     .build();
 
-            when(clienteDao.findByDni(cliente.getDni())).thenReturn(Mono.just(cliente));
+            when(clienteService.findByDni(cliente.getDni())).thenReturn(Mono.just(cliente));
 
             Mono<Cliente> resultado = clienteService.registrarCliente(cliente);
 
@@ -55,5 +59,65 @@ public class ClienteServiceImplTest {
             });
 
         }
+    }
+
+    @Nested
+    class findByDni {
+
+        @DisplayName("FindById  de un cliente registrado")
+        @Test
+        void findByDniCaso1() {
+            Cliente cliente = Cliente.builder()
+                    .idCliente(1)
+                    .nombre("Neil")
+                    .apellido("Vara")
+                    .telefono("123456789")
+                    .dni("741")
+                    .nuevo(false)
+                    .build();
+            when(clienteDao.findByDni(anyString())).thenReturn(Mono.just(cliente));
+
+            Mono<Cliente> resultado = clienteService.findByDni(anyString());
+
+            resultado.subscribe(e -> {
+                assert e.getDni().equals(cliente.getDni());
+            });
+
+        }
+
+        @DisplayName("FindById  de un cliente no registrado")
+        @Test
+        void findByDniCaso2() {
+            when(clienteDao.findByDni(anyString())).thenReturn(Mono.empty());
+
+            Mono<Cliente> resultado = clienteService.findByDni(anyString());
+
+            StepVerifier.create(resultado)
+                    .expectNextCount(0) // Expect no elements
+                    .verifyComplete();
+        }
+
+    }
+
+    @Test
+    void findAll() {
+
+        Cliente cliente = Cliente.builder()
+                .idCliente(1)
+                .nombre("Neil")
+                .apellido("Vara")
+                .telefono("123456789")
+                .dni("741")
+                .nuevo(false)
+                .build();
+
+        when(clienteDao.findAll()).thenReturn(Flux.fromIterable(Collections.singletonList(cliente)));
+
+        Flux<Cliente> resultado = clienteService.findAll();
+
+        StepVerifier.create(resultado)
+                .expectNext(cliente)
+                .verifyComplete();
+
     }
 }
